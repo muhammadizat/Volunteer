@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "volunteer"; // Update to your existing database name
+$dbname = "weekly"; // Update to your existing database name
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 

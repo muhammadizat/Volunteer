@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "volunteer"; // Update to your existing database name
+$dbname = "weekly"; // Update to your existing database name
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -20,7 +20,7 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     echo "<div id='infoDisplay'>"; // Add a container div
     echo "<table border='1'>";
-    echo "<tr><th>Name</th><th>Date</th><th>Time</th><th>Location</th></tr>";
+    echo "<tr><th>Name</th><th>Date</th><th>Time</th><th>Location</th><th colspan='2' >Adjustments</th></tr>";
     while ($row = $result->fetch_assoc()) {
         echo "<tr>";
         echo "<td>" . $row["name"] . "</td>";

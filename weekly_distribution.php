@@ -4,7 +4,6 @@
     <title>Weekly Distribution</title>
     <link rel="stylesheet" type="text/css" href="style01.css">
     <link rel="stylesheet" type="text/css" href="style02.css">
-    <!script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8MARhcFaaDTeY5962-4u9ivqyiXrNRyg&libraries=places"></script>
     <style>
         #map {
             height: 300px;
@@ -29,7 +28,7 @@
     <div class="container">
         <form action="process_weekly_distribution.php" method="post">
             <div class="form-group">
-                <label for="date">Volunteer Name:</label>
+                <label for="name">Volunteer Name:</label>
                 <input type="name" name="name" required>
             </div>
             <div class="form-group">
@@ -43,28 +42,53 @@
             <div class="form-group">
                 <label for="location">Location:</label>
                 <input type="text" id="location" name="location" required>
+                <button type="button" onclick="showLocationOnMap()">Show on Map</button>
                 <div id="map"></div>
             </div>
             <input type="submit" class="btn" value="Schedule Distribution">
         </form>
-        <a href="index.php" class="btn">Back</a>
+        <a href="dashboard_v.php" class="btn">Back</a>
     </div>
 
     <div class="footer">
         <p>&copy; 2023 Food Saver App. All rights reserved.</p>
     </div>
 
-    <!script>
-        function initMap() {
-            var map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: -34.397, lng: 150.644},
-                zoom: 8
-            });
+    <script>
+        var map;
 
-            var autocomplete = new google.maps.places.Autocomplete(
-                document.getElementById('location'), {map: map});
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: 1.5645, lng: 103.6373},
+            zoom: 14.7
+        });
+
+            var distributionLocationInput = document.getElementById('location');
+            var autocomplete = new google.maps.places.Autocomplete(distributionLocationInput);
+
+            // Set the bounds to the current map's viewport.
+            autocomplete.bindTo('bounds', map);
         }
-    <!/script>
-    <!script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8MARhcFaaDTeY5962-4u9ivqyiXrNRyg&libraries=places&callback=initMap"></script>
+
+        function showLocationOnMap() {
+            var locationInput = document.getElementById('location');
+            var geocoder = new google.maps.Geocoder();
+
+            geocoder.geocode({ 'address': locationInput.value }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    var location = results[0].geometry.location;
+                    map.setCenter(location);
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: location
+                    });
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlZ4VAT_LmNI0kKqUpPusyXa3BqYclROg&libraries=places&callback=initMap"></script>
+
 </body>
 </html>
